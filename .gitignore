@@ -1,0 +1,19 @@
+# Godot
+.godot/
+*.uid
+
+# Mono / C#
+.mono/
+data_*/
+mono_crash.*.json
+bin/
+obj/
+
+# Build output
+builds/
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
