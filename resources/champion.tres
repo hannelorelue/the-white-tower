@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ChampionData" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://r5irx6x8o8nd" path="res://scripts/data/ChampionData.cs" id="1"]
+
+[resource]
+script = ExtResource("1")
+Name = "Champion"
+MaxHp = 40
+ArmorClass = 18
+AttackBonus = 7
+DamageDiceCount = 1
+DamageDie = 8
+DamageBonus = 4
+Perception = 5
+SpeedFeet = 25
+ShieldHardness = 5
+ShieldMaxHp = 20

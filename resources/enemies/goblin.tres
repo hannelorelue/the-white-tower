@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://cqqmbs7ul0v57" path="res://scripts/data/CombatantData.cs" id="1"]
+
+[resource]
+script = ExtResource("1")
+Name = "Goblin"
+MaxHp = 20
+ArmorClass = 14
+AttackBonus = 5
+DamageDiceCount = 1
+DamageDie = 6
+DamageBonus = 2
+Perception = 3
+SpeedFeet = 25

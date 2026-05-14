@@ -51,19 +51,24 @@ res://
 
 ## Coding Conventions
 
-**Scene / Script structure**
+### Scene / Script structure
+
 Scripts mirror the `scenes/` tree under `scripts/`. A scene at `scenes/combat/BattleArena.tscn` has its script at `scripts/combat/BattleArena.cs`. Never co-locate `.cs` files next to `.tscn` files.
 
-**Node access**
+### Node access
+
 Use `[Export]` for all node references. Never use hardcoded `GetNode("../../...")` paths.
 
-**Cross-system communication**
+### Cross-system communication
+
 Systems must not call each other directly. Use Godot signals or a thin event-bus autoload to decouple subsystems (farming, combat, inventory, etc.).
 
-**Data**
+### Data
+
 Item stats, crop growth, enemy definitions, etc. must be `[GlobalClass]` `Resource` subclasses saved as `.tres` files. No hardcoded data in scripts, no plain `Dictionary` blobs.
 
-**Autoloads**
+### Autoloads
+
 Autoloads (`GameManager`, `SaveSystem`, etc.) coordinate — they do not contain game logic. Keep them thin.
 
 ### Naming
@@ -73,7 +78,8 @@ Autoloads (`GameManager`, `SaveSystem`, etc.) coordinate — they do not contain
 * Signals: `PascalCase` past tense (`TurnEnded`, `ItemPickedUp`)
 * Private fields: `_camelCase`
 
-**Save system**
+### Save system
+
 Each major system implements `GetSaveData()` / `LoadSaveData()` returning a typed save-data struct. Decide the save format before systems multiply.
 
 ## Agent behavior

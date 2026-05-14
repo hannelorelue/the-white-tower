@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cuost8n1nln4c"]
+
+[ext_resource type="Script" uid="uid://hv3vmn2c2mvq" path="res://scripts/combat/BattleArena.cs" id="1_7l7jw"]
+[ext_resource type="PackedScene" uid="uid://brckeroxvc2te" path="res://scenes/combat/champion.tscn" id="2_wkd6j"]
+[ext_resource type="PackedScene" uid="uid://de6me7njj7g0h" path="res://scenes/combat/combatant.tscn" id="3_eosk2"]
+[ext_resource type="Resource" path="res://resources/champion.tres" id="3_ndkro"]
+[ext_resource type="Resource" path="res://resources/enemies/goblin.tres" id="4_wkd6j"]
+
+[node name="BattleArena" type="Node2D" unique_id=1556810200 node_paths=PackedStringArray("_champion", "_enemy")]
+script = ExtResource("1_7l7jw")
+_champion = NodePath("Champion")
+_enemy = NodePath("Combatant")
+
+[node name="Champion" parent="." unique_id=1724478357 instance=ExtResource("2_wkd6j")]
+Data = ExtResource("3_ndkro")
+
+[node name="Combatant" parent="." unique_id=1727668863 instance=ExtResource("3_eosk2")]
+Data = ExtResource("4_wkd6j")
+
+[editable path="Champion"]

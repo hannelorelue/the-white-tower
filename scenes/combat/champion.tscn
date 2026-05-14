@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://brckeroxvc2te"]
+
+[ext_resource type="Script" uid="uid://cvr3irx2px67" path="res://scripts/combat/champion/Champion.cs" id="1_gjrew"]
+
+[node name="Champion" type="Node2D" unique_id=1724478357]
+script = ExtResource("1_gjrew")
