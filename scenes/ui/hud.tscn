@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://c2yi0ljq507p6"]
+
+[ext_resource type="Script" uid="uid://ve340i4xpo4i" path="res://scripts/combat/Hud.cs" id="1_0mwgc"]
+
+[node name="HUD" type="CanvasLayer" unique_id=554920375]
+script = ExtResource("1_0mwgc")
+
+[node name="ChampionPanel" type="VBoxContainer" parent="." unique_id=988323553]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ChampionName" type="Label" parent="ChampionPanel" unique_id=1182807500]
+layout_mode = 2
+
+[node name="ChampionHp" type="Label" parent="ChampionPanel" unique_id=1334418016]
+layout_mode = 2
+text = "40 / 40"
+
+[node name="EnemyPanel" type="VBoxContainer" parent="." unique_id=859088384]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="EnemyName" type="Label" parent="EnemyPanel" unique_id=143523437]
+layout_mode = 2
+
+[node name="EnemyHp" type="Label" parent="EnemyPanel" unique_id=965014815]
+layout_mode = 2
+text = "20 / 20"
+
+[node name="ActionPanel" type="HBoxContainer" parent="." unique_id=2101232776]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionPips" type="Label" parent="ActionPanel" unique_id=1205785317]
+layout_mode = 2
+text = "●●●"
+
+[node name="ReactionPip" type="Label" parent="ActionPanel" unique_id=1093942151]
+layout_mode = 2
+text = "⚡"

@@ -13,6 +13,7 @@ public partial class Champion : Combatant
     {
         base._Ready();
         ShieldCurrentHp = ((ChampionData)Data).ShieldMaxHp;
+        Reactions.Add(new RetributiveStrike());
     }
 
     public void RaiseShield()

@@ -2,13 +2,13 @@ using Godot;
 
 public static class StrikeAction
 {
-    public static StrikeResult Execute(Combatant attacker, Combatant target)
+    public static StrikeResult Execute(Combatant attacker, Combatant target, int situationalBonus = 0)
     {
         if (!attacker.SpendAction())
             return new StrikeResult { Outcome = StrikeOutcome.Miss };
 
         int roll = Dice.Roll(20);
-        int total = roll + attacker.Data.AttackBonus + attacker.MultipleAttackPenalty;
+        int total = roll + attacker.Data.AttackBonus + attacker.MultipleAttackPenalty + situationalBonus;
         int diff = total - target.Data.ArmorClass;
 
         StrikeOutcome outcome;
@@ -30,7 +30,7 @@ public static class StrikeAction
                 : attacker.Data.DamageDiceCount;
 
             damage = Mathf.Max(1, Dice.Roll(diceCount, attacker.Data.DamageDie) + attacker.Data.DamageBonus);
-            target.TakeDamage(damage);
+            target.TakeDamage(damage, source: attacker);
         }
 
         return new StrikeResult

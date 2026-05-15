@@ -1,8 +1,10 @@
 using Godot;
-
+using System.Collections.Generic;
 public partial class Combatant : Node2D
 {
     [Export] public CombatantData Data { get; set; }
+
+    public List<Reaction> Reactions { get; } = [];
 
     [ExportGroup("Nodes")]
     [Export] private Sprite2D _sprite;
@@ -25,10 +27,19 @@ public partial class Combatant : Node2D
         CurrentHp = Data.MaxHp;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, Combatant source = null)
     {
         CurrentHp = Mathf.Max(0, CurrentHp - amount);
         EmitSignal(SignalName.HpChanged, CurrentHp, Data.MaxHp);
+
+        if (source != null)
+            CombatManager.Instance.BroadcastTrigger(new ReactionTrigger
+            {
+                Type = ReactionTriggerType.DamageTaken,
+                Source = source,
+                Target = this,
+                Amount = amount
+            });
 
         if (CurrentHp == 0)
             EmitSignal(SignalName.Died);
@@ -67,6 +78,21 @@ public partial class Combatant : Node2D
         ReactionAvailable = true;
         MultipleAttackPenalty = 0;
         EmitSignal(SignalName.TurnStarted);
+    }
+
+    public void TryTriggerReactions(ReactionTrigger trigger)
+    {
+        if (!ReactionAvailable)
+            return;
+
+        foreach (var reaction in Reactions)
+        {
+            if (reaction.CanTrigger(this, trigger))
+            {
+                reaction.Execute(this, trigger);
+                return;
+            }
+        }
     }
 
     public void EndTurn()

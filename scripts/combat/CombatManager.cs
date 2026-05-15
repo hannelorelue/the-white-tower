@@ -20,6 +20,15 @@ public partial class CombatManager : Node
         Instance = this;
     }
 
+    public void BroadcastTrigger(ReactionTrigger trigger)
+    {
+        foreach (var combatant in _combatants)
+        {
+            if (combatant.CurrentHp > 0 && combatant != trigger.Source)
+                combatant.TryTriggerReactions(trigger);
+        }
+    }
+
     public void StartCombat(List<Combatant> combatants)
     {
         _combatants = combatants
