@@ -85,3 +85,47 @@ Each major system implements `GetSaveData()` / `LoadSaveData()` returning a type
 ## Agent behavior
 
 * Do not commit by yourself
+
+## Current State
+
+### Combat system — complete (MVP)
+
+**Scripts:** `scripts/combat/`, `scripts/data/`
+
+Key classes:
+
+* `CombatantData` / `ChampionData` — `[GlobalClass]` Resources defining stats (HP, AC, attack bonus, damage dice, Perception, speed, shield)
+* `Combatant` (Node2D) — runtime state: CurrentHp, ActionsRemaining, ReactionAvailable, MultipleAttackPenalty, AcBonus. Holds `List<Reaction>`
+* `Champion : Combatant` — adds shield state (IsShieldRaised, ShieldCurrentHp). Registers RetributiveStrike and ShieldBlock reactions on Ready
+* `CombatManager` (autoload) — owns turn order, broadcasts `ReactionTrigger` events, emits `TurnChanged` / `CombatEnded`
+* `StrikeAction` — static class, executes PF2e Strike (d20 + AttackBonus + MAP + situationalBonus vs AC + AcBonus). Crits double dice count, not total
+* `Reaction` / `ReactionTrigger` — generic reaction system. `BeforeDamageTaken` triggers reduce damage before it is applied (ShieldBlock); `DamageTaken` triggers fire after (RetributiveStrike)
+* `Dice` — static utility at `scripts/Dice.cs`
+
+PF2e rules in scope: Strike, multiple-attack penalty (0 / -5 / -10), Raise Shield (+2 AC), Shield Block (hardness reduces damage), Retributive Strike (reaction, -2 to hit).
+
+PF2e rules not yet implemented: conditions, saving throws, dying state, feats, spells.
+
+Test scene: `scenes/combat/BattleArena.tscn`. Controls: Space = Strike, ↑ = Raise Shield, Enter = End Turn.
+
+---
+
+### Inventory system — scaffolded, not yet wired to UI or player
+
+**Scripts:** `scripts/inventory/`
+
+Key classes:
+
+* `ItemData` — `[GlobalClass]` Resource: Name, Icon, MaxStackSize (1 for tools, >1 for stackables)
+* `ItemStack` — plain C# class: holds ItemData reference + Quantity. `Add()` returns leftover
+* `InventoryContainer` (Node) — base class with slot array, `TryAdd` / `TryRemove` / `HasItem` / `HasSpace`. `TryAdd` is all-or-nothing (checks space before committing). Emits `SlotChanged(int)`
+* `Backpack : InventoryContainer` — 24 slots. Hotbar = slots 0–7 (no item type restriction). Tracks `ActiveHotbarSlot`. Emits `ActiveSlotChanged(int)`
+* `Chest : InventoryContainer` — 48 slots, stationary
+
+Design rules:
+
+* Hotbar is a window into the backpack (slots 0–7), not a separate container
+* Full backpack blocks pickup — `TryAdd` returns false, caller handles the failure
+* Crafting pulls from backpack only, not chests
+
+Not yet built: inventory UI, item `.tres` files, player pickup logic, chest placement in world.

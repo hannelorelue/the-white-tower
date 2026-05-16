@@ -14,6 +14,7 @@ public partial class Combatant : Node2D
     public int ActionsRemaining { get; private set; }
     public bool ReactionAvailable { get; private set; }
     public int MultipleAttackPenalty { get; private set; }
+    public int AcBonus { get; protected set; }
 
     [Signal] public delegate void HpChangedEventHandler(int current, int max);
     [Signal] public delegate void DiedEventHandler();
@@ -29,7 +30,9 @@ public partial class Combatant : Node2D
 
     public void TakeDamage(int amount, Combatant source = null)
     {
-        CurrentHp = Mathf.Max(0, CurrentHp - amount);
+        int finalAmount = ReduceIncomingDamage(amount, source);
+
+        CurrentHp = Mathf.Max(0, CurrentHp - finalAmount);
         EmitSignal(SignalName.HpChanged, CurrentHp, Data.MaxHp);
 
         if (source != null)
@@ -38,11 +41,28 @@ public partial class Combatant : Node2D
                 Type = ReactionTriggerType.DamageTaken,
                 Source = source,
                 Target = this,
-                Amount = amount
+                Amount = finalAmount
             });
 
         if (CurrentHp == 0)
             EmitSignal(SignalName.Died);
+    }
+
+    private int ReduceIncomingDamage(int amount, Combatant source)
+    {
+        if (!ReactionAvailable || source == null)
+            return amount;
+
+        var trigger = new ReactionTrigger
+        {
+            Type = ReactionTriggerType.BeforeDamageTaken,
+            Source = source,
+            Target = this,
+            Amount = amount
+        };
+
+        TryTriggerReactions(trigger);
+        return trigger.Amount;
     }
 
     public void Heal(int amount)
@@ -77,6 +97,7 @@ public partial class Combatant : Node2D
         ActionsRemaining = 3;
         ReactionAvailable = true;
         MultipleAttackPenalty = 0;
+        AcBonus = 0;
         EmitSignal(SignalName.TurnStarted);
     }
 

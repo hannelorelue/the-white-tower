@@ -9,7 +9,7 @@ public static class StrikeAction
 
         int roll = Dice.Roll(20);
         int total = roll + attacker.Data.AttackBonus + attacker.MultipleAttackPenalty + situationalBonus;
-        int diff = total - target.Data.ArmorClass;
+        int diff = total - (target.Data.ArmorClass + target.AcBonus);
 
         StrikeOutcome outcome;
         if (roll == 20 || diff >= 10)

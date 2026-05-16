@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dnwyq8e2l0boh"]
+
+[node name="OverworldEnemy" type="CharacterBody2D" unique_id=675360459]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1316264392]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1251667088]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=954519157]

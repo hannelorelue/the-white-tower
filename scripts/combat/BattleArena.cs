@@ -3,11 +3,17 @@ using System.Collections.Generic;
 
 public partial class BattleArena : Node2D
 {
+    private const string ChampionScenePath = "res://scenes/combat/champion.tscn";
+    private const string CombatantScenePath = "res://scenes/combat/combatant.tscn";
+
     [Export] private Champion _champion;
     [Export] private Combatant _enemy;
 
     public override void _Ready()
     {
+        _champion ??= CreateCombatant<Champion>(ChampionScenePath, GameManager.Instance?.PlayerData);
+        _enemy ??= CreateCombatant<Combatant>(CombatantScenePath, GameManager.Instance?.PendingEnemyData);
+
         CombatManager.Instance.TurnChanged += OnTurnChanged;
         CombatManager.Instance.CombatEnded += OnCombatEnded;
 
@@ -26,7 +32,12 @@ public partial class BattleArena : Node2D
         else if (@event.IsActionPressed("ui_select"))
         {
             var result = StrikeAction.Execute(_champion, _enemy);
-            GD.Print($"Strike: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_enemy.Data.ArmorClass} | Damage: {result.DamageDealt}");
+            GD.Print($"Strike: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_enemy.Data.ArmorClass + _enemy.AcBonus} | Damage: {result.DamageDealt}");
+        }
+        else if (@event.IsActionPressed("ui_up"))
+        {
+            _champion.RaiseShield();
+            GD.Print($"Shield raised — AC is now {_champion.Data.ArmorClass + _champion.AcBonus}");
         }
     }
 
@@ -45,7 +56,7 @@ public partial class BattleArena : Node2D
         while (enemy.ActionsRemaining > 0 && _champion.CurrentHp > 0)
         {
             var result = StrikeAction.Execute(enemy, _champion);
-            GD.Print($"{enemy.Data.Name} strikes: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_champion.Data.ArmorClass} | Damage: {result.DamageDealt}");
+            GD.Print($"{enemy.Data.Name} strikes: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_champion.Data.ArmorClass + _champion.AcBonus} | Damage: {result.DamageDealt}");
         }
 
         CombatManager.Instance.AdvanceTurn();
@@ -55,5 +66,14 @@ public partial class BattleArena : Node2D
     {
         GD.Print(playerWon ? "Victory!" : "Defeated...");
         SetProcessUnhandledInput(false);
+        GameManager.Instance?.EndCombat();
+    }
+
+    private static T CreateCombatant<T>(string scenePath, CombatantData data) where T : Combatant
+    {
+        var scene = GD.Load<PackedScene>(scenePath);
+        var combatant = scene.Instantiate<T>();
+        combatant.Data = data;
+        return combatant;
     }
 }

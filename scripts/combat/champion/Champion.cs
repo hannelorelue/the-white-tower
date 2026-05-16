@@ -13,6 +13,7 @@ public partial class Champion : Combatant
     {
         base._Ready();
         ShieldCurrentHp = ((ChampionData)Data).ShieldMaxHp;
+        Reactions.Add(new ShieldBlock());
         Reactions.Add(new RetributiveStrike());
     }
 
@@ -22,12 +23,14 @@ public partial class Champion : Combatant
             return;
 
         IsShieldRaised = true;
+        AcBonus = 2;
         EmitSignal(SignalName.ShieldRaised);
     }
 
     public void LowerShield()
     {
         IsShieldRaised = false;
+        AcBonus = 0;
         EmitSignal(SignalName.ShieldLowered);
     }
 

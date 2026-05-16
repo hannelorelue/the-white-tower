@@ -1,4 +1,4 @@
-public enum ReactionTriggerType { DamageTaken, AllyDamageTaken }
+public enum ReactionTriggerType { BeforeDamageTaken, DamageTaken, AllyDamageTaken }
 
 public class ReactionTrigger
 {

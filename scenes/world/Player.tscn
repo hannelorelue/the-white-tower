@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dacyo1s8hf3fh"]
+
+[node name="Player" type="CharacterBody2D" unique_id=937779304]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=482346989]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1219040482]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1111418913]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1984970671]
