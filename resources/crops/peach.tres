@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ct7opiuwurjh7"]
+
+[ext_resource type="Script" uid="uid://dyuqquydoobbn" path="res://scripts/inventory/ItemData.cs" id="1_5utqu"]
+[ext_resource type="Texture2D" uid="uid://bkvfg1bsqtmdr" path="res://assets/sprites/environment/Crops/peach.png" id="1_ouurt"]
+
+[resource]
+script = ExtResource("1_5utqu")
+Name = "Peach"
+Icon = ExtResource("1_ouurt")
+MaxStackSize = 20
+metadata/_custom_type_script = "uid://dyuqquydoobbn"

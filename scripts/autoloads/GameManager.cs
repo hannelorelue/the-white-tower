@@ -14,11 +14,7 @@ public partial class GameManager : Node
     {
         Instance = this;
         PlayerData = GD.Load<ChampionData>("res://resources/champion.tres");
-    }
-
-    public void RegisterBackpack(Backpack backpack)
-    {
-        PlayerBackpack = backpack;
+        PlayerBackpack = GetNode<Backpack>("Backpack");
     }
 
     public void StartCombat(CombatantData enemyData)

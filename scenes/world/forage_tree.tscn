@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://bihq077elmpdm"]
 
+[ext_resource type="Script" uid="uid://bktlnlhbqeb0y" path="res://scripts/world/ForageTree.cs" id="1_o2eya"]
+[ext_resource type="Resource" uid="uid://ct7opiuwurjh7" path="res://resources/crops/peach.tres" id="2_6b0dc"]
+[ext_resource type="Texture2D" uid="uid://dwi3m031ujnvp" path="res://assets/sprites/environment/Crops/Peach_Tree.png" id="2_o2eya"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2eya"]
+size = Vector2(4, 20)
+
 [node name="StaticBody2D" type="StaticBody2D" unique_id=196572623]
+script = ExtResource("1_o2eya")
+DropItem = ExtResource("2_6b0dc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1828491867]
+texture = ExtResource("2_o2eya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=981107892]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_o2eya")

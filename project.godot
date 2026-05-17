@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CombatManager="*res://scripts/combat/CombatManager.cs"
-GameManager="*res://scripts/autoloads/GameManager.cs"
+GameManager="*res://scenes/autoloads/GameManager.tscn"
 config/name="the-white-tower"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"

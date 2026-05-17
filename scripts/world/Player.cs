@@ -1,17 +1,14 @@
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Player : WorldCharacter
 {
     [Export] private float _speed = 100f;
-    [Export] private Backpack _backpack;
     [Export] private Area2D _interactionArea;
 
     private IInteractable _currentInteractable;
 
     public override void _Ready()
     {
-        GameManager.Instance.RegisterBackpack(_backpack);
-
         _interactionArea.BodyEntered += OnBodyEntered;
         _interactionArea.BodyExited += OnBodyExited;
     }
@@ -21,6 +18,29 @@ public partial class Player : CharacterBody2D
         var input = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
         Velocity = input * _speed;
         MoveAndSlide();
+        UpdateAnimation(input);
+    }
+
+    private void UpdateAnimation(Vector2 input)
+    {
+        if (input == Vector2.Zero)
+        {
+            _sprite.Play($"idle_{(_lastDirection == "left" ? "right" : _lastDirection)}");
+            return;
+        }
+
+        if (Mathf.Abs(input.X) >= Mathf.Abs(input.Y))
+        {
+            _lastDirection = input.X > 0 ? "right" : "left";
+            _sprite.FlipH = input.X < 0;
+            _sprite.Play("walk_right");
+        }
+        else
+        {
+            _lastDirection = input.Y > 0 ? "down" : "up";
+            _sprite.FlipH = false;
+            _sprite.Play($"walk_{_lastDirection}");
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event)

@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cvheo8qmcejf6"]
+
+[ext_resource type="Script" uid="uid://b57rty4efonun" path="res://scripts/ui/InventoryUI.cs" id="1_4ycse"]
+[ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="2_drsq2"]
+
+[node name="InventoryUI" type="CanvasLayer" unique_id=717541496 node_paths=PackedStringArray("_backpackPanel", "_hotbarContainer", "_backpackGrid")]
+script = ExtResource("1_4ycse")
+_backpackPanel = NodePath("BackpackPanel")
+_hotbarContainer = NodePath("HotbarContainer")
+_backpackGrid = NodePath("BackpackPanel/MarginContainer/BackpackGrid")
+
+[node name="HotbarContainer" type="HBoxContainer" parent="." unique_id=955615853]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BackpackPanel" type="NinePatchRect" parent="." unique_id=5210952]
+offset_right = 145.0
+offset_bottom = 105.0
+texture = ExtResource("2_drsq2")
+region_rect = Rect2(680, 8, 32, 32)
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="MarginContainer" type="MarginContainer" parent="BackpackPanel" unique_id=1082180291]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="BackpackGrid" type="GridContainer" parent="BackpackPanel/MarginContainer" unique_id=682262904]
+layout_mode = 2
+columns = 6

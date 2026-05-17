@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bleoc2t4i7n74"]
+
+[ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="1_kscix"]
+[ext_resource type="Script" uid="uid://dpsfpjc345ydf" path="res://scripts/ui/InventorySlot.cs" id="1_ru537"]
+
+[node name="InventorySlot" type="Control" unique_id=1227261983 node_paths=PackedStringArray("_icon", "_quantity", "_highlight")]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 18.0
+offset_bottom = 18.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_ru537")
+_icon = NodePath("Icon")
+_quantity = NodePath("Quantity")
+_highlight = NodePath("Highlight")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=401833882]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kscix")
+region_rect = Rect2(346, 10, 28, 31)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Icon" type="TextureRect" parent="." unique_id=73269284]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+
+[node name="Quantity" type="Label" parent="." unique_id=263117918]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+horizontal_alignment = 2
+
+[node name="Highlight" type="ColorRect" parent="." unique_id=860674078]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.36862746)
