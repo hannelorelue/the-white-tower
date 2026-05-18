@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="1_kscix"]
 [ext_resource type="Script" uid="uid://dpsfpjc345ydf" path="res://scripts/ui/InventorySlot.cs" id="1_ru537"]
+[ext_resource type="Texture2D" uid="uid://bvxg33ey5kvp7" path="res://assets/sprites/ui/Selector.png" id="3_r4ab7"]
 
 [node name="InventorySlot" type="Control" unique_id=1227261983 node_paths=PackedStringArray("_icon", "_quantity", "_highlight")]
 custom_minimum_size = Vector2(18, 18)
@@ -39,6 +40,17 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 3
 
+[node name="Highlight" type="TextureRect" parent="." unique_id=2018202693]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_r4ab7")
+expand_mode = 3
+
 [node name="Quantity" type="Label" parent="." unique_id=263117918]
 layout_mode = 1
 anchors_preset = 3
@@ -52,7 +64,7 @@ grow_horizontal = 0
 grow_vertical = 0
 horizontal_alignment = 2
 
-[node name="Highlight" type="ColorRect" parent="." unique_id=860674078]
+[node name="Highlight-color" type="ColorRect" parent="." unique_id=860674078]
 visible = false
 layout_mode = 1
 anchors_preset = 15

@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bsgfy3t4bfhcl"]
+
+[ext_resource type="Script" uid="uid://crdjujblbfp8b" path="res://scripts/combat/CombatEndScreen.cs" id="1_1t2vh"]
+[ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="2_f4e23"]
+
+[node name="CombatEndScreen" type="CanvasLayer" unique_id=1203569604 node_paths=PackedStringArray("_resultLabel", "_promptLabel")]
+script = ExtResource("1_1t2vh")
+_resultLabel = NodePath("NinePatchRect/VBoxContainer/ResultLabel")
+_promptLabel = NodePath("NinePatchRect/VBoxContainer/PromptLabel")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=2004279399]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f4e23")
+region_rect = Rect2(1112, 8, 32, 32)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect" unique_id=1136293413]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="ResultLabel" type="Label" parent="NinePatchRect/VBoxContainer" unique_id=322954378]
+layout_mode = 2
+
+[node name="PromptLabel" type="Label" parent="NinePatchRect/VBoxContainer" unique_id=302561985]
+layout_mode = 2
+text = "Press any key"

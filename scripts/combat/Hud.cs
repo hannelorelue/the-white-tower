@@ -16,8 +16,13 @@ public partial class Hud : CanvasLayer
     [Export] private Label _actionPips;
     [Export] private Label _reactionPip;
 
+    [ExportGroup("Log")]
+    [Export] private RichTextLabel _combatLog;
+
     public override void _Ready()
     {
+        CombatManager.Instance.MessageLogged += line => _combatLog.AppendText(line + "\n");
+
         _champion.HpChanged += (current, max) => _championHp.Text = $"{current} / {max}";
         _champion.ActionSpent += (remaining) => UpdateActionPips(remaining);
         _champion.TurnStarted += () => { UpdateActionPips(3); UpdateReactionPip(true); };

@@ -8,6 +8,7 @@ public partial class BattleArena : Node2D
 
     [Export] private Champion _champion;
     [Export] private Combatant _enemy;
+    [Export] private CombatEndScreen _endScreen;
 
     public override void _Ready()
     {
@@ -32,18 +33,18 @@ public partial class BattleArena : Node2D
         else if (@event.IsActionPressed("ui_select"))
         {
             var result = StrikeAction.Execute(_champion, _enemy);
-            GD.Print($"Strike: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_enemy.Data.ArmorClass + _enemy.AcBonus} | Damage: {result.DamageDealt}");
+            CombatManager.Instance.Log(FormatStrike("You", _enemy.Data.Name, result));
         }
         else if (@event.IsActionPressed("ui_up"))
         {
             _champion.RaiseShield();
-            GD.Print($"Shield raised — AC is now {_champion.Data.ArmorClass + _champion.AcBonus}");
+            CombatManager.Instance.Log($"Shield raised. (AC {_champion.Data.ArmorClass + _champion.AcBonus})");
         }
     }
 
     private void OnTurnChanged(Combatant combatant)
     {
-        GD.Print($"--- {combatant.Data.Name}'s turn ({combatant.ActionsRemaining} actions) ---");
+        CombatManager.Instance.Log($"— {combatant.Data.Name}'s turn —");
 
         if (combatant is Champion)
             return;
@@ -56,7 +57,7 @@ public partial class BattleArena : Node2D
         while (enemy.ActionsRemaining > 0 && _champion.CurrentHp > 0)
         {
             var result = StrikeAction.Execute(enemy, _champion);
-            GD.Print($"{enemy.Data.Name} strikes: {result.Outcome} | Roll: {result.Roll} | Total: {result.TotalToHit} vs AC {_champion.Data.ArmorClass + _champion.AcBonus} | Damage: {result.DamageDealt}");
+            CombatManager.Instance.Log(FormatStrike(enemy.Data.Name, "you", result));
         }
 
         CombatManager.Instance.AdvanceTurn();
@@ -64,9 +65,21 @@ public partial class BattleArena : Node2D
 
     private void OnCombatEnded(bool playerWon)
     {
-        GD.Print(playerWon ? "Victory!" : "Defeated...");
         SetProcessUnhandledInput(false);
-        GameManager.Instance?.EndCombat();
+        _endScreen.Show(playerWon);
+    }
+
+    private static string FormatStrike(string attackerName, string targetName, StrikeResult result)
+    {
+        string outcomeText = result.Outcome switch
+        {
+            StrikeOutcome.CriticalHit  => $"Critical Hit — {result.DamageDealt} dmg",
+            StrikeOutcome.Hit          => $"Hit — {result.DamageDealt} dmg",
+            StrikeOutcome.Miss         => "Miss",
+            StrikeOutcome.CriticalMiss => "Critical Miss!",
+            _                          => result.Outcome.ToString()
+        };
+        return $"{attackerName} → {targetName}: {outcomeText} (roll {result.Roll})";
     }
 
     private static T CreateCombatant<T>(string scenePath, CombatantData data) where T : Combatant

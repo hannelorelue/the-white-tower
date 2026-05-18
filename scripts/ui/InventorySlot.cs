@@ -4,7 +4,7 @@ public partial class InventorySlot : Control
 {
     [Export] private TextureRect _icon;
     [Export] private Label _quantity;
-    [Export] private ColorRect _highlight;
+    [Export] private TextureRect _highlight;
 
     public void SetItem(ItemStack? stack)
     {

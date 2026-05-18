@@ -6,11 +6,13 @@
 [ext_resource type="Resource" path="res://resources/champion.tres" id="3_ndkro"]
 [ext_resource type="Resource" path="res://resources/enemies/goblin.tres" id="4_wkd6j"]
 [ext_resource type="PackedScene" uid="uid://c2yi0ljq507p6" path="res://scenes/ui/hud.tscn" id="6_ndkro"]
+[ext_resource type="PackedScene" uid="uid://bsgfy3t4bfhcl" path="res://scenes/combat/combat_end_screen.tscn" id="7_tkqx3"]
 
-[node name="BattleArena" type="Node2D" unique_id=1556810200 node_paths=PackedStringArray("_champion", "_enemy")]
+[node name="BattleArena" type="Node2D" unique_id=1556810200 node_paths=PackedStringArray("_champion", "_enemy", "_endScreen")]
 script = ExtResource("1_7l7jw")
 _champion = NodePath("Champion")
 _enemy = NodePath("Combatant")
+_endScreen = NodePath("CombatEndScreen")
 
 [node name="Champion" parent="." unique_id=1724478357 instance=ExtResource("2_wkd6j")]
 Data = ExtResource("3_ndkro")
@@ -27,6 +29,8 @@ _enemyName = NodePath("EnemyPanel/EnemyName")
 _enemyHp = NodePath("EnemyPanel/EnemyHp")
 _actionPips = NodePath("ActionPanel/ActionPips")
 _reactionPip = NodePath("ActionPanel/ReactionPip")
+
+[node name="CombatEndScreen" parent="." unique_id=1203569604 instance=ExtResource("7_tkqx3")]
 
 [editable path="Champion"]
 [editable path="HUD"]

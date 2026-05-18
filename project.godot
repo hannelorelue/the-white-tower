@@ -33,6 +33,11 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="the-white-tower"
 
+[gui]
+
+theme/custom="uid://db536fu0awnpb"
+theme/custom_font="uid://cruu3ej0xt2b6"
+
 [input]
 
 ui_accept={

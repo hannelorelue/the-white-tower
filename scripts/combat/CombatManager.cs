@@ -14,6 +14,9 @@ public partial class CombatManager : Node
     [Signal] public delegate void CombatStartedEventHandler();
     [Signal] public delegate void TurnChangedEventHandler(Combatant combatant);
     [Signal] public delegate void CombatEndedEventHandler(bool playerWon);
+    [Signal] public delegate void MessageLoggedEventHandler(string message);
+
+    public void Log(string message) => EmitSignal(SignalName.MessageLogged, message);
 
     public override void _Ready()
     {
