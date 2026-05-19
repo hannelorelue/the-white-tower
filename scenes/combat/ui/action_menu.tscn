@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dqdcqchamm06l"]
+
+[ext_resource type="Script" uid="uid://d0cjl51gh0mr1" path="res://scripts/combat/ui/ActionMenu.cs" id="1_ey7c2"]
+[ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="2_65ufl"]
+
+[node name="ActionMenu" type="Control" unique_id=994359782 node_paths=PackedStringArray("_container")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ey7c2")
+_container = NodePath("NinePatchRect/VBoxContainer")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1306339804]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_65ufl")
+region_rect = Rect2(1067, 11, 26, 26)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect" unique_id=64313434]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

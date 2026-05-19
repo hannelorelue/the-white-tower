@@ -73,10 +73,13 @@ Autoloads (`GameManager`, `SaveSystem`, etc.) coordinate — they do not contain
 
 ### Naming
 
-* Classes and scene files: `PascalCase`
+* Classes: `PascalCase`
+* Scene and resource files: `snake_case` (Godot default — `battle_arena.tscn`, `goblin.tres`)
 * Methods: `PascalCase` (C# standard)
 * Signals: `PascalCase` past tense (`TurnEnded`, `ItemPickedUp`)
 * Private fields: `_camelCase`
+
+Scene file paths hardcoded in scripts (e.g. `const string ScenePath = "res://..."`) must use `snake_case` to match the actual file names Godot creates.
 
 ### Save system
 

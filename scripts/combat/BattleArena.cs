@@ -9,6 +9,7 @@ public partial class BattleArena : Node2D
     [Export] private Champion _champion;
     [Export] private Combatant _enemy;
     [Export] private CombatEndScreen _endScreen;
+    [Export] private ActionMenu _actionMenu;
 
     public override void _Ready()
     {
@@ -21,35 +22,53 @@ public partial class BattleArena : Node2D
         CombatManager.Instance.StartCombat(new List<Combatant> { _champion, _enemy });
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (CombatManager.Instance.ActiveCombatant is not Champion)
-            return;
-
-        if (@event.IsActionPressed("ui_accept"))
-        {
-            CombatManager.Instance.AdvanceTurn();
-        }
-        else if (@event.IsActionPressed("ui_select"))
-        {
-            var result = StrikeAction.Execute(_champion, _enemy);
-            CombatManager.Instance.Log(FormatStrike("You", _enemy.Data.Name, result));
-        }
-        else if (@event.IsActionPressed("ui_up"))
-        {
-            _champion.RaiseShield();
-            CombatManager.Instance.Log($"Shield raised. (AC {_champion.Data.ArmorClass + _champion.AcBonus})");
-        }
-    }
-
     private void OnTurnChanged(Combatant combatant)
     {
         CombatManager.Instance.Log($"— {combatant.Data.Name}'s turn —");
 
         if (combatant is Champion)
+        {
+            _actionMenu.Populate(BuildChampionActions());
             return;
+        }
 
+        _actionMenu.Hide();
         RunEnemyTurn(combatant);
+    }
+
+    private List<CombatAction> BuildChampionActions()
+    {
+        return new List<CombatAction>
+        {
+            new()
+            {
+                Name = "Strike",
+                ActionCost = 1,
+                DamagePreview = FormatDamagePreview(_champion.Data),
+                Execute = () =>
+                {
+                    var result = StrikeAction.Execute(_champion, _enemy);
+                    CombatManager.Instance.Log(FormatStrike("You", _enemy.Data.Name, result));
+                }
+            },
+            new()
+            {
+                Name = "Raise Shield",
+                ActionCost = 1,
+                DamagePreview = "+2 AC",
+                Execute = () =>
+                {
+                    _champion.RaiseShield();
+                    CombatManager.Instance.Log($"Shield raised. (AC {_champion.Data.ArmorClass + _champion.AcBonus})");
+                }
+            },
+            new()
+            {
+                Name = "End Turn",
+                ActionCost = 0,
+                Execute = () => CombatManager.Instance.AdvanceTurn()
+            }
+        };
     }
 
     private void RunEnemyTurn(Combatant enemy)
@@ -65,8 +84,14 @@ public partial class BattleArena : Node2D
 
     private void OnCombatEnded(bool playerWon)
     {
-        SetProcessUnhandledInput(false);
+        _actionMenu.Hide();
         _endScreen.Show(playerWon);
+    }
+
+    private static string FormatDamagePreview(CombatantData data)
+    {
+        string dice = $"{data.DamageDiceCount}d{data.DamageDie}";
+        return data.DamageBonus != 0 ? $"{dice}+{data.DamageBonus}" : dice;
     }
 
     private static string FormatStrike(string attackerName, string targetName, StrikeResult result)

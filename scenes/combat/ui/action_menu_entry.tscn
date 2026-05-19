@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://rue8x0a8yr8w"]
+
+[ext_resource type="Script" uid="uid://b0fdefeslrb18" path="res://scripts/combat/ui/ActionMenuEntry.cs" id="1_lox6d"]
+
+[node name="ActionMenuEntry" type="Control" unique_id=1587902446 node_paths=PackedStringArray("_nameLabel", "_costLabel", "_damageLabel", "_highlight")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_lox6d")
+_nameLabel = NodePath("HBoxContainer/NameLabel")
+_costLabel = NodePath("HBoxContainer/CostLabel")
+_damageLabel = NodePath("HBoxContainer/DamageLabel")
+_highlight = NodePath("Highligt")
+
+[node name="Highligt" type="ColorRect" parent="." unique_id=89469504]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=342719371]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="HBoxContainer" unique_id=34243696]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CostLabel" type="Label" parent="HBoxContainer" unique_id=1930404828]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="DamageLabel" type="Label" parent="HBoxContainer" unique_id=1542147421]
+layout_mode = 2
+horizontal_alignment = 2
