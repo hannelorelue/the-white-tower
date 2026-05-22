@@ -3,10 +3,14 @@
 [ext_resource type="Script" uid="uid://b0fdefeslrb18" path="res://scripts/combat/ui/ActionMenuEntry.cs" id="1_lox6d"]
 
 [node name="ActionMenuEntry" type="Control" unique_id=1587902446 node_paths=PackedStringArray("_nameLabel", "_costLabel", "_damageLabel", "_highlight")]
+custom_minimum_size = Vector2(0, 12)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
 script = ExtResource("1_lox6d")
 _nameLabel = NodePath("HBoxContainer/NameLabel")
 _costLabel = NodePath("HBoxContainer/CostLabel")
@@ -35,9 +39,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CostLabel" type="Label" parent="HBoxContainer" unique_id=1930404828]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
+size_flags_horizontal = 4
 horizontal_alignment = 1
 
 [node name="DamageLabel" type="Label" parent="HBoxContainer" unique_id=1542147421]
 layout_mode = 2
+size_flags_horizontal = 4
 horizontal_alignment = 2

@@ -22,19 +22,17 @@ Data = ExtResource("3_ndkro")
 [node name="Combatant" parent="." unique_id=1727668863 instance=ExtResource("3_eosk2")]
 Data = ExtResource("4_wkd6j")
 
-[node name="HUD" parent="." unique_id=554920375 node_paths=PackedStringArray("_champion", "_enemy", "_championName", "_championHp", "_enemyName", "_enemyHp", "_actionPips", "_reactionPip") instance=ExtResource("6_ndkro")]
+[node name="HUD" parent="." unique_id=554920375 node_paths=PackedStringArray("_champion", "_enemy") instance=ExtResource("6_ndkro")]
 _champion = NodePath("../Champion")
 _enemy = NodePath("../Combatant")
-_championName = NodePath("ChampionPanel/ChampionName")
-_championHp = NodePath("ChampionPanel/ChampionHp")
-_enemyName = NodePath("EnemyPanel/EnemyName")
-_enemyHp = NodePath("EnemyPanel/EnemyHp")
-_actionPips = NodePath("ActionPanel/ActionPips")
-_reactionPip = NodePath("ActionPanel/ReactionPip")
 
 [node name="CombatEndScreen" parent="." unique_id=1203569604 instance=ExtResource("7_tkqx3")]
+visible = false
 
 [node name="ActionMenu" parent="." unique_id=994359782 instance=ExtResource("8_st8w5")]
+offset_top = 115.0
+offset_right = 100.0
+offset_bottom = 143.0
 
 [editable path="Champion"]
 [editable path="HUD"]

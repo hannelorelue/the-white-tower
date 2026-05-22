@@ -3,29 +3,26 @@
 [ext_resource type="Script" uid="uid://d0cjl51gh0mr1" path="res://scripts/combat/ui/ActionMenu.cs" id="1_ey7c2"]
 [ext_resource type="Texture2D" uid="uid://4kq0rg6uxsxr" path="res://assets/sprites/ui/UI_Frames.png" id="2_65ufl"]
 
-[node name="ActionMenu" type="Control" unique_id=994359782 node_paths=PackedStringArray("_container")]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="NinePatchRect" type="NinePatchRect" unique_id=1306339804 node_paths=PackedStringArray("_vbox")]
+offset_right = 320.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ey7c2")
-_container = NodePath("NinePatchRect/VBoxContainer")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1306339804]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+size_flags_vertical = 3
 texture = ExtResource("2_65ufl")
 region_rect = Rect2(1067, 11, 26, 26)
 patch_margin_left = 5
 patch_margin_top = 5
 patch_margin_right = 5
 patch_margin_bottom = 5
+script = ExtResource("1_ey7c2")
+_vbox = NodePath("ActionMenu")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect" unique_id=64313434]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ActionMenu" type="VBoxContainer" parent="." unique_id=290130521]
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

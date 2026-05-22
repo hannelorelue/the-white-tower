@@ -1,6 +1,10 @@
+using System.Collections.Generic;
 using Godot;
+
 public partial class Hud : CanvasLayer
 {
+    private const int LogLineCount = 2;
+
     [Export] private Champion _champion;
     [Export] private Combatant _enemy;
 
@@ -17,11 +21,13 @@ public partial class Hud : CanvasLayer
     [Export] private Label _reactionPip;
 
     [ExportGroup("Log")]
-    [Export] private RichTextLabel _combatLog;
+    [Export] private Label _combatLog;
+
+    private readonly Queue<string> _logLines = new();
 
     public override void _Ready()
     {
-        CombatManager.Instance.MessageLogged += line => _combatLog.AppendText(line + "\n");
+        CombatManager.Instance.MessageLogged += AddLogLine;
 
         _champion.HpChanged += (current, max) => _championHp.Text = $"{current} / {max}";
         _champion.ActionSpent += (remaining) => UpdateActionPips(remaining);
@@ -52,5 +58,13 @@ public partial class Hud : CanvasLayer
     {
         _reactionPip.Text = "⚡";
         _reactionPip.Modulate = available ? Colors.White : Colors.DarkGray;
+    }
+
+    private void AddLogLine(string line)
+    {
+        _logLines.Enqueue(line);
+        if (_logLines.Count > LogLineCount)
+            _logLines.Dequeue();
+        _combatLog.Text = string.Join("\n", _logLines);
     }
 }

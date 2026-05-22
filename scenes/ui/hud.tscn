@@ -2,9 +2,15 @@
 
 [ext_resource type="Script" uid="uid://ve340i4xpo4i" path="res://scripts/combat/Hud.cs" id="1_0mwgc"]
 
-[node name="HUD" type="CanvasLayer" unique_id=554920375 node_paths=PackedStringArray("_combatLog")]
+[node name="HUD" type="CanvasLayer" unique_id=554920375 node_paths=PackedStringArray("_championName", "_championHp", "_enemyName", "_enemyHp", "_actionPips", "_reactionPip", "_combatLog")]
 script = ExtResource("1_0mwgc")
-_combatLog = NodePath("RichTextLabel")
+_championName = NodePath("ChampionPanel/ChampionName")
+_championHp = NodePath("ChampionPanel/ChampionHp")
+_enemyName = NodePath("EnemyPanel/EnemyName")
+_enemyHp = NodePath("EnemyPanel/EnemyHp")
+_actionPips = NodePath("ActionPanel/ActionPips")
+_reactionPip = NodePath("ActionPanel/ReactionPip")
+_combatLog = NodePath("Label")
 
 [node name="ChampionPanel" type="VBoxContainer" parent="." unique_id=988323553]
 offset_right = 40.0
@@ -49,14 +55,13 @@ text = "●●●"
 layout_mode = 2
 text = "⚡"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1107042843]
-anchors_preset = 7
-anchor_left = 0.5
+[node name="Label" type="Label" parent="." unique_id=1319370291]
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -40.0
-offset_right = 130.0
-grow_horizontal = 2
+offset_left = -40.0
+offset_top = -17.0
+grow_horizontal = 0
 grow_vertical = 0
