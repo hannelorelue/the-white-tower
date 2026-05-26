@@ -25,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 1, 1, 0.14901961)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=342719371]
 layout_mode = 1
@@ -41,10 +42,10 @@ size_flags_horizontal = 3
 [node name="CostLabel" type="Label" parent="HBoxContainer" unique_id=1930404828]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 horizontal_alignment = 1
 
 [node name="DamageLabel" type="Label" parent="HBoxContainer" unique_id=1542147421]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 horizontal_alignment = 2

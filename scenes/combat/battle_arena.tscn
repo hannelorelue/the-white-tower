@@ -26,13 +26,15 @@ Data = ExtResource("4_wkd6j")
 _champion = NodePath("../Champion")
 _enemy = NodePath("../Combatant")
 
+[node name="ActionMenu" parent="." unique_id=994359782 instance=ExtResource("8_st8w5")]
+offset_top = 103.0
+offset_right = 194.0
+offset_bottom = 164.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="CombatEndScreen" parent="." unique_id=1203569604 instance=ExtResource("7_tkqx3")]
 visible = false
-
-[node name="ActionMenu" parent="." unique_id=994359782 instance=ExtResource("8_st8w5")]
-offset_top = 115.0
-offset_right = 100.0
-offset_bottom = 143.0
 
 [editable path="Champion"]
 [editable path="HUD"]

@@ -103,27 +103,47 @@ Key classes:
 * `CombatManager` (autoload) — owns turn order, broadcasts `ReactionTrigger` events, emits `TurnChanged` / `CombatEnded`
 * `StrikeAction` — static class, executes PF2e Strike (d20 + AttackBonus + MAP + situationalBonus vs AC + AcBonus). Crits double dice count, not total
 * `Reaction` / `ReactionTrigger` — generic reaction system. `BeforeDamageTaken` triggers reduce damage before it is applied (ShieldBlock); `DamageTaken` triggers fire after (RetributiveStrike)
+* `ActionMenu` (NinePatchRect) — keyboard-driven action menu. `Populate(List<CombatAction>)` / `Hide()`. Entries are instantiated `ActionMenuEntry` children of its inner VBoxContainer
 * `Dice` — static utility at `scripts/Dice.cs`
 
 PF2e rules in scope: Strike, multiple-attack penalty (0 / -5 / -10), Raise Shield (+2 AC), Shield Block (hardness reduces damage), Retributive Strike (reaction, -2 to hit).
 
 PF2e rules not yet implemented: conditions, saving throws, dying state, feats, spells.
 
-Test scene: `scenes/combat/BattleArena.tscn`. Controls: Space = Strike, ↑ = Raise Shield, Enter = End Turn.
+Scene: `scenes/combat/battle_arena.tscn`.
 
 ---
 
-### Inventory system — scaffolded, not yet wired to UI or player
+### World system — complete (MVP)
 
-**Scripts:** `scripts/inventory/`
+**Scripts:** `scripts/world/`, `scripts/autoloads/GameManager.cs`
+
+Key classes:
+
+* `WorldCharacter : CharacterBody2D` — base for animated world characters. `UpdateAnimation(Vector2)` drives 4-directional walk/idle sprites via `AnimatedSprite2D`
+* `Player : WorldCharacter` — WASD/arrow movement, `Area2D` interaction zone. Press confirm to call `IInteractable.Interact(player)` on the nearest interactable
+* `OverworldEnemy : WorldCharacter` — stationary enemy with `Area2D` sight zone. Triggers `GameManager.StartCombat(Data)` when player enters
+* `ForageTree : StaticBody2D, IInteractable` — exports `DropItem` (ItemData) and `DropQuantity`. On interact: calls `backpack.TryAdd()`; logs success or "Backpack full"
+* `IInteractable` — interface: `void Interact(Player player)`
+* `GameManager` (autoload) — holds `PlayerData`, `PlayerBackpack`, `PendingEnemyData`. `StartCombat()` stores return scene path and switches to `battle_arena.tscn`; `EndCombat()` returns to it
+
+Scene: `scenes/world/region_01.tscn`.
+
+---
+
+### Inventory system — complete (MVP)
+
+**Scripts:** `scripts/inventory/`, `scripts/ui/`
 
 Key classes:
 
 * `ItemData` — `[GlobalClass]` Resource: Name, Icon, MaxStackSize (1 for tools, >1 for stackables)
 * `ItemStack` — plain C# class: holds ItemData reference + Quantity. `Add()` returns leftover
-* `InventoryContainer` (Node) — base class with slot array, `TryAdd` / `TryRemove` / `HasItem` / `HasSpace`. `TryAdd` is all-or-nothing (checks space before committing). Emits `SlotChanged(int)`
-* `Backpack : InventoryContainer` — 24 slots. Hotbar = slots 0–7 (no item type restriction). Tracks `ActiveHotbarSlot`. Emits `ActiveSlotChanged(int)`
+* `InventoryContainer` (Node) — base class with slot array, `TryAdd` / `TryRemove` / `HasItem` / `HasSpace`. `TryAdd` is all-or-nothing. Emits `SlotChanged(int)`
+* `Backpack : InventoryContainer` — 24 slots. Hotbar = slots 0–7. Tracks `ActiveHotbarSlot`. Emits `ActiveSlotChanged(int)`
 * `Chest : InventoryContainer` — 48 slots, stationary
+* `InventoryUI : CanvasLayer` — hotbar always visible; backpack grid toggled with E. 1–8 selects hotbar slot; scroll wheel cycles it. Listens to `SlotChanged` / `ActiveSlotChanged`
+* `InventorySlot` — single slot visual (icon + quantity label + highlight)
 
 Design rules:
 
@@ -131,4 +151,24 @@ Design rules:
 * Full backpack blocks pickup — `TryAdd` returns false, caller handles the failure
 * Crafting pulls from backpack only, not chests
 
-Not yet built: inventory UI, item `.tres` files, player pickup logic, chest placement in world.
+Item resources defined: `resources/items/wood.tres`, `resources/crops/peach.tres`.
+
+Not yet built: chest placement in world, additional item `.tres` files.
+
+---
+
+### Farming system — not yet built
+
+`scripts/farming/` and `scenes/farming/` exist but are empty. `resources/crops/peach.tres` (ItemData, stackable ×20) is defined and has a sprite. The interaction pattern (`IInteractable` + `backpack.TryAdd`) is proven in `ForageTree` and can serve as a template.
+
+---
+
+### Crafting system — not yet built
+
+`scripts/crafting/` exists but is empty.
+
+---
+
+### Save system — not yet built
+
+`scripts/save/` exists but is empty.

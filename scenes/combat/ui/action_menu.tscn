@@ -16,9 +16,9 @@ patch_margin_top = 5
 patch_margin_right = 5
 patch_margin_bottom = 5
 script = ExtResource("1_ey7c2")
-_vbox = NodePath("ActionMenu")
+_vbox = NodePath("ActionVbox")
 
-[node name="ActionMenu" type="VBoxContainer" parent="." unique_id=290130521]
+[node name="ActionVbox" type="VBoxContainer" parent="." unique_id=290130521]
 custom_minimum_size = Vector2(20, 10)
 layout_mode = 1
 anchors_preset = 15
