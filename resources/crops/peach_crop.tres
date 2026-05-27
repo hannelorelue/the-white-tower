@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CropData" format=3 uid="uid://pj1jxtjbrf7y"]
+
+[ext_resource type="Resource" uid="uid://ct7opiuwurjh7" path="res://resources/crops/peach.tres" id="1_0ukiu"]
+[ext_resource type="Script" uid="uid://dn5j6bsu5au7f" path="res://scripts/data/CropData.cs" id="1_te4xq"]
+[ext_resource type="Texture2D" uid="uid://dwlorixejhqry" path="res://assets/sprites/environment/Crops/Fruit_Tree_Stage1.png" id="2_c1esi"]
+[ext_resource type="Resource" uid="uid://c3yo5aj5y6347" path="res://resources/crops/peach_sapling.tres" id="3_c1esi"]
+[ext_resource type="Texture2D" uid="uid://d1dg1h4wwfcq7" path="res://assets/sprites/environment/Crops/Fruit_Tree_Stage2.png" id="3_fkecg"]
+[ext_resource type="Texture2D" uid="uid://ducg1hrahij7w" path="res://assets/sprites/environment/Crops/Fruit_Tree_Stage3.png" id="4_e8d2y"]
+[ext_resource type="Texture2D" uid="uid://dwi3m031ujnvp" path="res://assets/sprites/environment/Crops/Peach_Tree.png" id="5_lgbs2"]
+
+[resource]
+script = ExtResource("1_te4xq")
+Name = "Peach"
+SeedItem = ExtResource("3_c1esi")
+HarvestYield = [ExtResource("1_0ukiu")]
+HarvestQuantities = PackedInt32Array(3)
+GrowthStages = 3
+Perennial = true
+StageSprites = [ExtResource("2_c1esi"), ExtResource("3_fkecg"), ExtResource("4_e8d2y")]
+FruitingSprite = ExtResource("5_lgbs2")
+metadata/_custom_type_script = "uid://dn5j6bsu5au7f"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c3yo5aj5y6347"]
+
+[ext_resource type="Script" uid="uid://dyuqquydoobbn" path="res://scripts/inventory/ItemData.cs" id="1_l4vbd"]
+[ext_resource type="Texture2D" uid="uid://dwlorixejhqry" path="res://assets/sprites/environment/Crops/Fruit_Tree_Stage1.png" id="1_spgof"]
+
+[resource]
+script = ExtResource("1_l4vbd")
+Name = "Peach Sapling"
+Icon = ExtResource("1_spgof")
+MaxStackSize = 3
+metadata/_custom_type_script = "uid://dyuqquydoobbn"
