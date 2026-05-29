@@ -15,6 +15,11 @@ public partial class GameManager : Node
         Instance = this;
         PlayerData = GD.Load<ChampionData>("res://resources/champion.tres");
         PlayerBackpack = GetNode<Backpack>("Backpack");
+
+        var sapling = GD.Load<ItemData>("res://resources/crops/peach_sapling.tres");
+        var wateringCan = GD.Load<ItemData>("res://resources/items/watering_can.tres");
+        PlayerBackpack.TryAdd(sapling, 3);
+        PlayerBackpack.TryAdd(wateringCan, 1);
     }
 
     public void StartCombat(CombatantData enemyData)

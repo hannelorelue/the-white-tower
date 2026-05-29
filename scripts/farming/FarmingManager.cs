@@ -8,11 +8,21 @@ public partial class FarmingManager : Node
     [Export] private Node2D _spriteContainer;
     [Export] private CropData[] _cropRegistry = [];
     [Export] private ItemData _wateringCan;
+    [Export] private Label _notification;
 
     private readonly Dictionary<Vector2I, CropState> _crops = new();
+    private Tween _notificationTween;
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        if (@event.IsActionPressed("ui_cancel"))
+        {
+            AdvanceDay();
+            Notify("Day advanced.");
+            GetViewport().SetInputAsHandled();
+            return;
+        }
+
         if (!@event.IsActionPressed("ui_accept"))
             return;
 
@@ -28,6 +38,7 @@ public partial class FarmingManager : Node
             if (heldItem == _wateringCan && !state.Watered)
             {
                 state.Watered = true;
+                Notify("Watered.");
                 GetViewport().SetInputAsHandled();
             }
             else if (IsHarvestable(state))
@@ -117,4 +128,15 @@ public partial class FarmingManager : Node
 
     private bool IsFarmland(Vector2I coords) =>
         _groundLayer.GetCellTileData(coords)?.GetCustomData("is_farmland").AsBool() ?? false;
+
+    private void Notify(string message)
+    {
+        if (_notification == null) return;
+        _notification.Text = message;
+        _notification.Visible = true;
+        _notificationTween?.Kill();
+        _notificationTween = CreateTween();
+        _notificationTween.TweenInterval(2.0);
+        _notificationTween.TweenCallback(Callable.From(() => _notification.Visible = false));
+    }
 }

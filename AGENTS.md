@@ -151,15 +151,43 @@ Design rules:
 * Full backpack blocks pickup — `TryAdd` returns false, caller handles the failure
 * Crafting pulls from backpack only, not chests
 
-Item resources defined: `resources/items/wood.tres`, `resources/crops/peach.tres`.
+Item resources defined: `resources/items/wood.tres`, `resources/items/watering_can.tres`, `resources/crops/peach.tres`, `resources/crops/peach_sapling.tres`.
+
+`GameManager._Ready()` seeds the player backpack with 3 peach saplings and 1 watering can on startup (temporary, until a proper starting-inventory system exists).
 
 Not yet built: chest placement in world, additional item `.tres` files.
 
 ---
 
-### Farming system — not yet built
+### Farming system — complete (MVP)
 
-`scripts/farming/` and `scenes/farming/` exist but are empty. `resources/crops/peach.tres` (ItemData, stackable ×20) is defined and has a sprite. The interaction pattern (`IInteractable` + `backpack.TryAdd`) is proven in `ForageTree` and can serve as a template.
+**Scripts:** `scripts/farming/`, `scripts/data/CropData.cs`
+
+Key classes:
+
+* `CropData` — `[GlobalClass]` Resource: `SeedItem` (ItemData), `HarvestYield` (ItemData[]), `HarvestQuantities` (int[]), `GrowthStages` (int), `Perennial` (bool), `StageSprites` (Texture2D[]), `FruitingSprite` (Texture2D). Perennial crops stay at max stage and re-fruit each day instead of being removed on harvest
+* `CropState` — plain C# class (not a Node): runtime state per planted tile. Fields: `Crop`, `Stage`, `Fruiting`, `Watered`, `Sprite` (Sprite2D spawned at tile world position)
+* `FarmingManager` (Node) — lives in the region scene. Holds `Dictionary<Vector2I, CropState>`. Exports: `_groundLayer` (TileMapLayer), `_player`, `_spriteContainer` (Node2D for crop sprites), `_cropRegistry` (CropData[]), `_wateringCan` (ItemData), `_notification` (Label)
+
+Farmland tiles are defined via a custom data layer `is_farmland` (bool) on the Ground TileMapLayer's TileSet. `FarmingManager` checks this on interact.
+
+**Input (ui_accept on a farmland tile):**
+
+* No crop + seed in hand → plant, consume 1 seed
+* Crop present + watering can in hand → water (required for growth)
+* Crop present + mature + fruiting → harvest, add yield to backpack
+
+**`AdvanceDay()`:** advances stage on watered crops, resets `Watered`, sets `Fruiting = true` on perennials at max stage. Currently triggered by Escape key (temporary — no day system yet).
+
+**Sprite logic:**
+
+* `stage < GrowthStages` → `StageSprites[stage]`
+* `stage == GrowthStages`, `Fruiting = true` → `FruitingSprite`
+* `stage == GrowthStages`, `Fruiting = false` → `StageSprites[last]` (bare mature tree after harvest)
+
+Resources defined: `resources/crops/peach_crop.tres` (CropData, 3 growth stages, perennial, peach sapling as seed), `resources/crops/peach_sapling.tres` (ItemData, max stack 3).
+
+Not yet built: day/time system to drive `AdvanceDay()`, watering visual on tile, save/load of crop state.
 
 ---
 
